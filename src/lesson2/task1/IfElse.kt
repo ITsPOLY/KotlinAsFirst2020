@@ -4,6 +4,8 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -69,15 +71,17 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if (age % 100 == 11) return "$age лет"
-    else if (age % 100 == 12) return "$age лет"
-    else if (age % 100 == 13) return "$age лет"
-    else if (age % 100 == 14) return "$age лет"
-    else if (age % 10 == 1) return "$age год"
-    else if (age % 10 == 2) return "$age года"
-    else if (age % 10 == 3) return "$age года"
-    else if (age % 10 == 4) return "$age года"
-    else return "$age лет"
+    return when {
+        age % 100 == 11 -> "$age лет"
+        age % 100 == 12 -> "$age лет"
+        age % 100 == 13 -> "$age лет"
+        age % 100 == 14 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age % 10 == 2 -> "$age года"
+        age % 10 == 3 -> "$age года"
+        age % 10 == 4 -> "$age года"
+        else -> "$age лет"
+    }
 }
 
 
@@ -94,11 +98,15 @@ fun timeForHalfWay(
     t3: Double, v3: Double
 ): Double {
     val s = (v1 * t1 + v2 * t2 + v3 * t3) / 2.0
-    if (s < v1 * t1) return s / v1
-    else if (v1 * t1 == s) return t1
-    else if ((s - v1 * t1) < v2 * t2) return t1 + (s - v1 * t1) / v2
-    else if (v1 * t1 + v2 * t2 == s) return t1 + t2
-    else return t1 + t2 + (s - (v1 * t1 + v2 * t2)) / v3
+    val s1 = v1 * t1
+    val s2 = v2 * t2
+    return when {
+        (s < s1) -> s / v1
+        (s1 == s) -> t1
+        ((s - s1) < s2) -> t1 + (s - s1) / v2
+        (s1 + s2 == s) -> t1 + t2
+        else -> t1 + t2 + (s - (s1 + s2)) / v3
+    }
 }
 
 /**
@@ -114,7 +122,16 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    val forFirstRook = (rookX1 == kingX || rookY1 == kingY)
+    val forSecondRook = (rookX2 == kingX || rookY2 == kingY)
+    return when {
+        forFirstRook && forSecondRook -> 3
+        forFirstRook -> 1
+        forSecondRook -> 2
+        else -> 0
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -140,7 +157,29 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val scrA = a * a
+    val scrB = b * b
+    val scrC = c * c
+    if (a < b + c && b < a + c && c < a + b) {
+        if (a == maxOf(a, b, c)) {
+            if (scrA < scrB + scrC) return 0
+            else if (scrA == scrB + scrC) return 1
+            else return 2
+        }
+        if (b == maxOf(a, b, c)) {
+            if (scrB < scrA + scrC) return 0
+            else if (scrB == scrA + scrC) return 1
+            else return 2
+        }
+        if (c == maxOf(a, b, c)) {
+            if (scrC < scrB + scrA) return 0
+            else if (scrC == scrB + scrA) return 1
+            else return 2
+        }
+    }
+    return -1
+}
 
 /**
  * Средняя (3 балла)

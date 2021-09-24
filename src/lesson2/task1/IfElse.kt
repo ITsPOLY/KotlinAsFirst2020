@@ -70,20 +70,22 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
-    return when {
-        age % 100 == 11 -> "$age лет"
-        age % 100 == 12 -> "$age лет"
-        age % 100 == 13 -> "$age лет"
-        age % 100 == 14 -> "$age лет"
-        age % 10 == 1 -> "$age год"
-        age % 10 == 2 -> "$age года"
-        age % 10 == 3 -> "$age года"
-        age % 10 == 4 -> "$age года"
-        else -> "$age лет"
+fun ageDescription(age: Int): String =
+    when (age % 100) {
+        11 -> "$age лет"
+        12 -> "$age лет"
+        13 -> "$age лет"
+        14 -> "$age лет"
+        else -> {
+            when (age % 10) {
+                1 -> "$age год"
+                2 -> "$age года"
+                3 -> "$age года"
+                4 -> "$age года"
+                else -> "$age лет"
+            }
+        }
     }
-}
-
 
 /**
  * Простая (2 балла)
@@ -101,10 +103,10 @@ fun timeForHalfWay(
     val s1 = v1 * t1
     val s2 = v2 * t2
     return when {
-        (s < s1) -> s / v1
-        (s1 == s) -> t1
-        ((s - s1) < s2) -> t1 + (s - s1) / v2
-        (s1 + s2 == s) -> t1 + t2
+        s < s1 -> s / v1
+        s1 == s -> t1
+        s - s1 < s2 -> t1 + (s - s1) / v2
+        s1 + s2 == s -> t1 + t2
         else -> t1 + t2 + (s - (s1 + s2)) / v3
     }
 }
@@ -123,8 +125,8 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    val forFirstRook = (rookX1 == kingX || rookY1 == kingY)
-    val forSecondRook = (rookX2 == kingX || rookY2 == kingY)
+    val forFirstRook = rookX1 == kingX || rookY1 == kingY
+    val forSecondRook = rookX2 == kingX || rookY2 == kingY
     return when {
         forFirstRook && forSecondRook -> 3
         forFirstRook -> 1
@@ -162,23 +164,31 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val scrB = b * b
     val scrC = c * c
     if (a < b + c && b < a + c && c < a + b) {
-        if (a == maxOf(a, b, c)) {
-            if (scrA < scrB + scrC) return 0
-            else if (scrA == scrB + scrC) return 1
-            else return 2
+        return when {
+            a == maxOf(a, b, c) -> {
+                return when {
+                    scrA < scrB + scrC -> 0
+                    scrA == scrB + scrC -> 1
+                    else -> 2
+                }
+            }
+            b == maxOf(a, b, c) -> {
+                return when {
+                    scrB < scrA + scrC -> 0
+                    scrB == scrA + scrC -> 1
+                    else -> 2
+                }
+            }
+            c == maxOf(a, b, c) -> {
+                return when {
+                    scrC < scrB + scrA -> 0
+                    scrC == scrB + scrA -> 1
+                    else -> 2
+                }
+            }
+            else -> -1
         }
-        if (b == maxOf(a, b, c)) {
-            if (scrB < scrA + scrC) return 0
-            else if (scrB == scrA + scrC) return 1
-            else return 2
-        }
-        if (c == maxOf(a, b, c)) {
-            if (scrC < scrB + scrA) return 0
-            else if (scrC == scrB + scrA) return 1
-            else return 2
-        }
-    }
-    return -1
+    } else return -1
 }
 
 /**

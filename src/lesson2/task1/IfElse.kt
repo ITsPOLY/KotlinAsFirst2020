@@ -166,21 +166,21 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     if (a < b + c && b < a + c && c < a + b) {
         return when {
             a == maxOf(a, b, c) -> {
-                return when {
+                when {
                     scrA < scrB + scrC -> 0
                     scrA == scrB + scrC -> 1
                     else -> 2
                 }
             }
             b == maxOf(a, b, c) -> {
-                return when {
+                when {
                     scrB < scrA + scrC -> 0
                     scrB == scrA + scrC -> 1
                     else -> 2
                 }
             }
             c == maxOf(a, b, c) -> {
-                return when {
+                when {
                     scrC < scrB + scrA -> 0
                     scrC == scrB + scrA -> 1
                     else -> 2

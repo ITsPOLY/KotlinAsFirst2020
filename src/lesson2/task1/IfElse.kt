@@ -160,36 +160,23 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val scrA = a * a
-    val scrB = b * b
-    val scrC = c * c
-    if (a < b + c && b < a + c && c < a + b) {
-        return when {
-            a == maxOf(a, b, c) -> {
-                when {
-                    scrA < scrB + scrC -> 0
-                    scrA == scrB + scrC -> 1
-                    else -> 2
-                }
-            }
-            b == maxOf(a, b, c) -> {
-                when {
-                    scrB < scrA + scrC -> 0
-                    scrB == scrA + scrC -> 1
-                    else -> 2
-                }
-            }
-            c == maxOf(a, b, c) -> {
-                when {
-                    scrC < scrB + scrA -> 0
-                    scrC == scrB + scrA -> 1
-                    else -> 2
-                }
-            }
-            else -> -1
+    val maximum = maxOf(a, b, c)
+    val minimum = minOf(a, b, c)
+    var between = 0.0
+    return if (a < b + c && b < a + c && c < a + b) {
+        when {
+            a == maximum && b == minimum || b == maximum && a == minimum -> between = c
+            b == maximum && c == minimum || c == maximum && b == minimum -> between = a
+            c == maximum && a == minimum || a == maximum && c == minimum -> between = b
         }
-    } else return -1
+        when {
+            maximum.pow(2) < minimum.pow(2) + between.pow(2) -> 0
+            maximum.pow(2) == minimum.pow(2) + between.pow(2) -> 1
+            else -> 2
+        }
+    } else -1
 }
+
 
 /**
  * Средняя (3 балла)

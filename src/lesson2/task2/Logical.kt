@@ -73,4 +73,16 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    val maximum = maxOf(a, b, c)
+    val minimum = minOf(a, b, c)
+    val maximumHole = maxOf(r, s)
+    val minimumHole = minOf(r, s)
+    val between = if (a == maximum && b == minimum || b == maximum && a == minimum) c
+    else if (b == maximum && c == minimum || c == maximum && b == minimum) a
+    else b
+//Если нам достаточно совпадения двух сторон, то сравним минимальную величину кирпича с
+//минимальной отверстия и среднюю с максимальной отверстия, т.к. при сравнении
+//максимальной кирпича и максимальной отверстия меньше вероятность подойти по размерам
+    return ((minimum <= minimumHole) && (between <= maximumHole))
+}

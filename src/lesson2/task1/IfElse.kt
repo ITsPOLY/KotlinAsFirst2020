@@ -186,4 +186,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    val maksimum = max(a, c)
+    val minimum = min(b, d)
+    return if (a > d || b < c) return -1
+    else minimum - maksimum
+}

@@ -153,7 +153,8 @@ fun collatzSteps(x: Int): Int = TODO()
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (k in 1..m * n) {
+    val minimum = minOf(m, n)
+    for (k in minimum..m * n) {
         if (k % m == 0 && k % n == 0) return k
     }
     return m * n

@@ -162,13 +162,12 @@ fun rookOrBishopThreatens(
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     val maximum = maxOf(a, b, c)
     val minimum = minOf(a, b, c)
-    var between = 0.0
+    val between = when {
+        a == maximum && b == minimum || b == maximum && a == minimum -> c
+        b == maximum && c == minimum || c == maximum && b == minimum -> a
+        else -> b
+    }
     return if (a < b + c && b < a + c && c < a + b) {
-        when {
-            a == maximum && b == minimum || b == maximum && a == minimum -> between = c
-            b == maximum && c == minimum || c == maximum && b == minimum -> between = a
-            c == maximum && a == minimum || a == maximum && c == minimum -> between = b
-        }
         when {
             maximum.pow(2) < minimum.pow(2) + between.pow(2) -> 0
             maximum.pow(2) == minimum.pow(2) + between.pow(2) -> 1

@@ -188,6 +188,6 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     val maksimum = max(a, c)
     val minimum = min(b, d)
-    return if (a > d || b < c) return -1
+    return if (a > d || b < c) -1
     else minimum - maksimum
 }

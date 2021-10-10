@@ -78,11 +78,13 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val minimum = minOf(a, b, c)
     val maximumHole = maxOf(r, s)
     val minimumHole = minOf(r, s)
-    val between = if (a == maximum && b == minimum || b == maximum && a == minimum) c
-    else if (b == maximum && c == minimum || c == maximum && b == minimum) a
-    else b
+    val between = when {
+        a == maximum && b == minimum || b == maximum && a == minimum -> c
+        b == maximum && c == minimum || c == maximum && b == minimum -> a
+        else -> b
+    }
 //Если нам достаточно совпадения двух сторон, то сравним минимальную величину кирпича с
 //минимальной отверстия и среднюю с максимальной отверстия, т.к. при сравнении
 //максимальной кирпича и максимальной отверстия меньше вероятность подойти по размерам
-    return ((minimum <= minimumHole) && (between <= maximumHole))
+    return (minimum <= minimumHole && between <= maximumHole)
 }

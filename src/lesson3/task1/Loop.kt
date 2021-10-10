@@ -98,7 +98,6 @@ fun fib(n: Int): Int {
     else {
         for (i in 3..n) {
             result = numberFirst + numberSecond
-            if (i == n) break
             numberFirst = numberSecond
             numberSecond = result
         }
@@ -112,14 +111,10 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var minimum = 1
     for (i in 2..sqrt(n.toDouble()).toInt()) {
-        if (n % i == 0) {
-            minimum = i
-            return minimum
-        } else continue
+        if (n % i == 0) return i
     }
-    return minimum
+    return n
 }
 
 /**

@@ -86,5 +86,5 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
 //Если нам достаточно совпадения двух сторон, то сравним минимальную величину кирпича с
 //минимальной отверстия и среднюю с максимальной отверстия, т.к. при сравнении
 //максимальной кирпича и максимальной отверстия меньше вероятность подойти по размерам
-    return (minimum <= minimumHole && between <= maximumHole)
+    return minimum <= minimumHole && between <= maximumHole
 }

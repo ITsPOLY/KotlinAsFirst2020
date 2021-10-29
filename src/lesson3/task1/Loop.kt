@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson4.task1.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -75,7 +76,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var number = n
-    var result = 1
+    var result = 0
     if (number == 0) return 1
     while (number > 0) {
         number /= 10
@@ -148,13 +149,18 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int {
-    val minimum = minOf(m, n)
-    for (k in minimum..m * n) {
-        if (k % m == 0 && k % n == 0) return k
+fun lcd(m: Int, n: Int): Int {
+    var a = m
+    var b = n
+    while (a != 0 && b != 0) {
+        if (a > b) {
+            a %= b
+        } else b %= a
     }
-    return m * n
+    return maxOf(a, b)
 }
+
+fun lcm(m: Int, n: Int): Int = m * n / lcd(m, n)
 
 /**
  * Средняя (3 балла)
@@ -245,11 +251,7 @@ fun squareSequenceDigit(n: Int): Int {
     var countNumber = 1
     while (countNumber < n) {
         number += 1
-        var c = number * number
-        while (c > 0) {
-            c /= 10
-            countNumber += 1
-        }
+        countNumber += digitNumber(number * number)
     }
     return (number * number / 10.0.pow(countNumber - n).toInt() % 10)
 }
@@ -268,11 +270,7 @@ fun fibSequenceDigit(n: Int): Int {
     var countNumber = 1
     while (countNumber < n) {
         number += 1
-        var c = fib(number)
-        while (c > 0) {
-            c /= 10
-            countNumber += 1
-        }
+        countNumber += digitNumber(fib(number))
     }
-    return (fib(number) / 10.0.pow(countNumber - n).toInt() % 10)
+return (fib(number) / 10.0.pow(countNumber - n).toInt() % 10)
 }

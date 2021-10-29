@@ -169,13 +169,7 @@ fun lcm(m: Int, n: Int): Int = m * n / lcd(m, n)
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    val minimum = minOf(m, n)
-    for (k in 2..minimum) {
-        if (m % k == 0 && n % k == 0) return false
-    }
-    return true
-}
+fun isCoPrime(m: Int, n: Int): Boolean = lcd(m, n) == 1
 
 /**
  * Средняя (3 балла)

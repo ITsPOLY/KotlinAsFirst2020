@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import lesson4.task1.abs
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -75,7 +76,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var number = n
+    var number = abs(n)
     var result = 0
     if (number == 0) return 1
     while (number > 0) {
@@ -247,7 +248,7 @@ fun squareSequenceDigit(n: Int): Int {
         number += 1
         countNumber += digitNumber(number * number)
     }
-    return (number * number / 10.0.pow(countNumber - n).toInt() % 10)
+    return number * number / 10.0.pow(countNumber - n).toInt() % 10
 }
 
 /**

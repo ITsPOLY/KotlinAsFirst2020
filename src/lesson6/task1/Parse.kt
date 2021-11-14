@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import java.util.*
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -114,7 +116,19 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val results = jumps.split(" ")
+    var maxRes = -1
+    for (jump in results) {
+        if ((jump != "-") && (jump != "%")) try {
+            val number = jump.toInt()
+            maxRes = maxOf(maxRes, number)
+        } catch (e: NumberFormatException) {
+            return -1
+        }
+    }
+    return maxRes
+}
 
 /**
  * Сложная (6 баллов)
@@ -138,7 +152,23 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    val main = expression.split(" ")
+    require(main[0] != "")
+    var sign = 1
+    var result = 0
+    for ((index, element) in main.withIndex()) {
+        if (index % 2 == 0 && element.all { it in '0'..'9' }) {
+            result += element.toInt() * sign
+        } else sign = when (element) {
+            "+" -> 1
+            "-" -> -1
+            else -> throw IllegalArgumentException()
+        }
+    }
+    return result
+}
+
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +179,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val main = str.split(" ")
+    var index = 0
+    for (element in 0 until main.size - 1) {
+        if (main[element].lowercase(Locale.getDefault()) == main[element + 1].lowercase(Locale.getDefault()))
+            return index
+        index += main[element].length + 1
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -162,8 +201,22 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
-
+fun mostExpensive(description: String): String {
+    val schedule = description.split("; ")
+    var expensive = -1.0
+    var name = ""
+    for (product in schedule) {
+        val element = product.split(" ")
+        if (element.size != 2) return ""
+        val count = element[1].toDouble()
+        if (count < 0.0) return ""
+        if (count > expensive) {
+            name = element[0]
+            expensive = count
+        }
+    }
+    return name
+}
 /**
  * Сложная (6 баллов)
  *

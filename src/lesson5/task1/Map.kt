@@ -99,9 +99,10 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
-    val exam = mutableMapOf<Int, List<String>>()
+    val exam = mutableMapOf<Int, MutableList<String>>()
     for ((name, grade) in grades) {
-        exam[grade] = exam.getOrDefault(grade, listOf()) + name
+        if (exam[grade] != null) exam[grade]?.add(name)
+        else exam[grade] = mutableListOf(name)
     }
     return exam
 }
@@ -120,7 +121,7 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
     for ((key, value) in a) {
         return value == b[key]
     }
-    return false
+    return true
 }
 
 /**
@@ -209,7 +210,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
     var goods: String? = null
     var minimum = 0.0
     for ((product, pair) in stuff) {
-        if (pair.first == kind && (pair.second < minimum || minimum == 0.0)) {
+        if ((pair.first == kind) && (!(pair.second >= minimum && minimum != 0.0))) {
             minimum = pair.second
             goods = product
         }

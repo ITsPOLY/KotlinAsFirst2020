@@ -1,0 +1,16 @@
+- Cделала форк
+- Добавила upstream с помощью команды `git remote add upstream-other ссылка`
+- Сделала`git fatch upstream`
+- Перешла на upstream/master с помощью команды `git checkout upstream/master`
+- Создала ветку backport из upstream от ветки master от коммита d535f3592006b8f2593c9f881d72c05164aadc13 `git checkout -b packport d535f3`
+- Залила ветку `git push —set-upstream origin backport`
+- Добавила upstream-other с помощью команды `git remote add upstream-other ссылка`
+- Перешла на master с помощью команды `git checkout master`
+- Смерджила с ветки master из remote upstream-other `git merge upstream/other/master`
+- Создала файл `remotes`
+- Закомитила файл remotes `git commit -m "Add remote file"`
+- Загрузила изменения на GitHub `"git push —set-upstream origin master"`
+- Создала файл howto.md.
+- Зарегистрировала изменения git add ..
+- Закомитила файл howto.md git commit -m "Add howto.md file".
+- Загрузила изменения на GitHub git push".
